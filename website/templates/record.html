@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+<div class="card">
+  <div class="card-header"><strong>
+    	{{ employee_record.first_name }} 
+		{{ employee_record.last_name }}&nbsp;&nbsp;&nbsp;&nbsp;Age: {{ employee_record.age }}&nbsp;&nbsp;&nbsp;&nbsp;gender: {{ employee_record.gender }}</strong>
+  </div>
+  <div class="card-body">
+
+
+
+<p class="card-text">
+<strong>Email: </strong>{{ employee_record.email }}</p>
+
+<p class="card-text">
+<strong>Phone: </strong>{{ employee_record.phone }}
+</p>
+
+<p class="card-text">
+<strong>Platform: </strong>{{ employee_record.platform }}</p>
+
+<p class="card-text">
+<strong>Country: </strong>{{ employee_record.country }}</p>
+
+<p class="card-text">
+<strong>Rate: </strong>${{ employee_record.specificrate }} {{ employee_record.rate_type }}</p>
+
+<p class="card-text">
+<strong>Native language: </strong>{{ employee_record.language }}</p>
+
+<p class="card-text">
+  <strong>Language 1: </strong>{{ employee_record.language1}}</p>
+
+<p class="card-text">
+<strong>Language 2: </strong>{{ employee_record.language2 }}</p>
+
+<p class="card-text">
+  <strong>Language 3: </strong>{{ employee_record.language3 }}</p>
+
+<p class="card-text">
+<strong>Language 4: </strong>{{ employee_record.language4 }}</p>
+
+<p class="card-text">
+  <strong>Language 5: </strong>{{ employee_record.language5 }}</p>
+
+<p class="card-text">
+<strong>Created At: </strong>{{ employee_record.created_at }}</p>
+
+<p class="card-text">
+  <strong>Status: </strong>{{ employee_record.status }}</p>
+
+<p class="card-text">
+  <strong>Date started: </strong>{{ employee_record.startdateD }} / {{ employee_record.startdateM }} / {{ employee_record.startdateY }}</p>
+  
+<p class="card-text">
+<strong>HLS ID: </strong>{{ employee_record.id }}</p>
+    
+    </div>
+
+
+</div>
+<br/><br/>
+<div class="card">
+  <div class="card-header"><strong>important note: </strong>
+  </div>
+  <div class="card-body">
+    {{ employee_record.note }}</div>
+</div>
+
+<br/><br/>
+
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+<a href="{% url 'delete_record' employee_record.id %}" class="btn btn-danger">Delete</a>
+
+<a href="{% url 'update_record' employee_record.id %}" class="btn btn-secondary">Update agent record</a>
+		
+
+{% endblock %}

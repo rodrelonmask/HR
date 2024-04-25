@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+<h1>Add Record</h1>
+<br/>
+
+	<form method="POST">
+		{% csrf_token %}
+
+		<div class="form-group">
+			<label for="{{ form.first_name.id_for_label }}"></label>
+			{{ form.first_name }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.last_name.id_for_label }}"></label>
+			{{ form.last_name }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.email.id_for_label }}"></label>
+			{{ form.email }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.phone.id_for_label }}"></label>
+			{{ form.phone }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.platform.id_for_label }}"></label>
+			{{ form.platform }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.country.id_for_label }}"></label>
+			{{ form.country }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language.id_for_label }}"></label>
+			{{ form.language }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language1.id_for_label }}"></label>
+			{{ form.language1 }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language2.id_for_label }}"></label>
+			{{ form.language2 }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language3.id_for_label }}"></label>
+			{{ form.language3 }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language4.id_for_label }}"></label>
+			{{ form.language4 }}
+		</div>
+
+		<div class="form-group">
+			<label for="{{ form.language5.id_for_label }}"></label>
+			{{ form.language5 }}
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.age.id_for_label }}">Age:</label>
+			{{ form.age }}
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.gender.id_for_label }}">Gender</label>
+			{{ form.gender }}
+		</div>
+
+		<div class="form-group col-md-9">
+			<br/>
+			<label for="{{ form.startdateD.id_for_label }} {{ form.startdateM.id_for_label }} {{ form.startdateY.id_for_label }}" >Date started</label>
+			{{ form.startdateD }} {{ form.startdateM }} {{ form.startdateY }}
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.status.id_for_label }}">Agent status:</label>
+			{{ form.status }}
+		</div>
+		
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.rate_type.id_for_label }}">Agent rate:</label>
+			{{ form.rate_type }} ${{ form.specificrate }} 
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.contract_type.id_for_label }}">Agent contract:</label>
+			{{ form.contract_type }}
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<label for="{{ form.agent_type.id_for_label }}">Agent type:</label>
+			{{ form.agent_type }}
+		</div>
+
+		<div class="form-group">
+			<br/>
+			<h6>Add a note to the agent's profile</h6>
+			<label for="{{ form.note.id_for_label }}"></label>
+			{{ form.note }}
+		</div>		
+
+		<br/>
+	<button type="submit" class="btn btn-secondary">Add Record</button>
+
+	</form>
+</div>
+<br/>
+<div class="col-md-6 offset-md-3">
+	<h2>Upload many profiles at once</h2>
+	<h6>*Only excel files are allowed*</h6>
+	<br/>
+	<form method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ excel_form.as_p }}
+	<button type="submit" class="btn btn-secondary">Upload Excel File</button>
+	</form>
+	<br/>
+</div>
+<br/>
+
+{% endblock %}
