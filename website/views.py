@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddRecordForm, ExcelUploadForm, VerificationForm
 from .models import Record
+from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
 def home(request):
     records = Record.objects.all()
@@ -102,3 +104,21 @@ def update_record(request, pk):
         messages.error(request, "You Must Be Logged In...")
         return redirect('home')
 
+@require_GET
+def download_template(request):
+    if request.user.is_authenticated:
+        # Open the template file and read its contents
+        with open('website/template.xlsx', 'rb') as template_file:
+            template_data = template_file.read()
+
+        # Create an HTTP response with the file contents
+        response = HttpResponse(template_data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+        # Set the file name in the response headers
+        response['Content-Disposition'] = 'attachment; filename="template.xlsx"'
+
+        # Return the response
+        return response
+    else:
+        messages.error(request, "You Must Be Logged In...")
+        return redirect('home')
