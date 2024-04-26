@@ -49,6 +49,7 @@ class SignUpForm(UserCreationForm):
 
 # Create Add Record Form
 class AddRecordForm(forms.ModelForm):
+    AGE_CHOICES = [(i, i) for i in range(18, 100)]  # i assume this is the allowed minumum age
     first_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"First Name", "class":"form-control"}), label="")
     last_name = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Last Name", "class":"form-control"}), label="")
     email = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Email", "class":"form-control"}), label="")
@@ -61,14 +62,13 @@ class AddRecordForm(forms.ModelForm):
     language3 = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"Language 3", "class":"form-control"}), label="")
     language4 = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"Language 4", "class":"form-control"}), label="")
     language5 = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"placeholder":"Language 5", "class":"form-control"}), label="")
+    age = forms.IntegerField(widget=forms.Select(choices=AGE_CHOICES))
+    gender = forms.ChoiceField
     status = forms.ChoiceField
     rate_type = forms.ChoiceField
     specificrate = forms.IntegerField
     contract_type = forms.ChoiceField
     agent_type = forms.ChoiceField
-    AGE_CHOICES = [(i, i) for i in range(18, 100)]  # i assume this is the allowed minumum age
-    age = forms.IntegerField(widget=forms.Select(choices=AGE_CHOICES))
-    gender = forms.ChoiceField
     startdateM = forms.ChoiceField
     startdateD = forms.ChoiceField
     startdateY = forms.ChoiceField
@@ -91,7 +91,7 @@ class ExcelUploadForm(forms.Form):
             raise forms.ValidationError('Invalid file type. Please upload an Excel file (.xlsx).')
 
     def save(self):
-        df = pd.read_excel(self.cleaned_data['excel_file'], names=["first_name", "last_name", "email", "phone", "platform", "country", "language", "language1", "language2", "language3", "language4", "language5", "age", "gender", "startdate"])
+        df = pd.read_excel(self.cleaned_data['excel_file'], names=["first_name", "last_name", "email", "phone", "platform", "country", "language", "language1", "language2", "language3", "language4", "language5", "age", "gender", "status", "rate_type", "specificrate", "contract_type", "agent_type", "startdateM", "startdateD", "startdateY"])
 
         for index, row in df.iterrows():
             record = Record.objects.create(
@@ -104,13 +104,19 @@ class ExcelUploadForm(forms.Form):
                 language=row.get('language', ''), #excel file row 7 (NATIVE LANGUAGE)
                 language1=row.get('language1', ''), #excel file row 8 (SECOND LANGYAGE)
                 language2=row.get('language2', ''), #excel file row 9 (EXTRA LANGUAGE 1)
-                language3=row.get('language3', ''), #excel file row 10 (EXTRA LANGUAGE 1)
-                language4=row.get('language4', ''), #excel file row 11 (EXTRA LANGUAGE 1)
-                language5=row.get('language5', ''), #excel file row 12 (EXTRA LANGUAGE 1)
+                language3=row.get('language3', ''), #excel file row 10 (EXTRA LANGUAGE 2)
+                language4=row.get('language4', ''), #excel file row 11 (EXTRA LANGUAGE 3)
+                language5=row.get('language5', ''), #excel file row 12 (EXTRA LANGUAGE 4)
                 age=row.get('age', ''), #excel file row 13 (AGE)
-                #gender=row.get('gender', ''), #excel file row 14 (GENDER)
-                #startdate=row.get('startdate', ''), #excel file row 15 (STARTDATE)
-
+                gender=row.get('gender', ''), #excel file row 14 (GENDER)
+                status=row.get('status', ''), #excel file row 15 (AGENT TYPE) 
+                rate_type=row.get('rate_type', ''), #excel file row 16 (AGENT TYPE) 
+                specificrate=row.get('specificrate', ''), #excel file row 17 (AGENT TYPE) 
+                contract_type=row.get('contract_type', ''), #excel file row 18 (AGENT TYPE)
+                agent_type=row.get('agent_type', ''), #excel file row 19 (AGENT TYPE) 
+                startdateM=row.get('startdateM', ''), #excel file row 19 (STARTDATE Month)
+                startdateD=row.get('startdateD', ''), #excel file row 20 (STARTDATE day)
+                startdateY=row.get('startdateY', ''), #excel file row 21 (STARTDATE year)
             )
             record.save()
 
