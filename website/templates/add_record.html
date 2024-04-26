@@ -74,7 +74,7 @@
 			{{ form.age }}
 		</div>
 
-		<div class="form-group">
+		<div >
 			<br/>
 			<label for="{{ form.gender.id_for_label }}">Gender</label>
 			{{ form.gender }}
@@ -126,6 +126,14 @@
 <div class="col-md-6 offset-md-3">
 	<h2>Upload many profiles at once</h2>
 	<h6>*Only excel files are allowed*</h6>
+	<button type="button" onclick="downloadTemplate()" class="btn btn-success">Download Template</button>
+
+		<script>
+		function downloadTemplate() {
+			window.location.href = '{% url "download_template" %}';
+		}
+		</script>
+
 	<br/>
 	<form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
