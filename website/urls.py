@@ -12,4 +12,5 @@ urlpatterns = [
     path('add_record/', views.add_record, name='add_record'),
     path('update_record/<int:pk>', views.update_record, name='update_record'),
     path('download_template/', views.download_template, name='download_template'),
+    path('search_record/', views.search_record, name='search_record'),
 ]

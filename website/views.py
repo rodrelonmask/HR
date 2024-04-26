@@ -5,6 +5,7 @@ from .forms import SignUpForm, AddRecordForm, ExcelUploadForm, VerificationForm
 from .models import Record
 from django.http import HttpResponse
 from django.views.decorators.http import require_GET
+from django.db.models import Q
 
 def home(request):
     records = Record.objects.all()
@@ -119,6 +120,15 @@ def download_template(request):
 
         # Return the response
         return response
+    else:
+        messages.error(request, "You Must Be Logged In...")
+        return redirect('home')
+
+def search_record(request):
+    if request.user.is_authenticated:
+        search_query = request.GET.get('search_query')
+        matching_records = Record.objects.filter(Q(first_name__icontains=search_query) | Q(last_name__icontains=search_query) | Q(email__icontains=search_query) | Q(phone__icontains=search_query) | Q(platform__icontains=search_query) | Q(language__icontains=search_query) | Q(country__icontains=search_query) | Q(status__icontains=search_query))
+        return render(request, 'search_results.html', {'records': matching_records, 'search_query': search_query})
     else:
         messages.error(request, "You Must Be Logged In...")
         return redirect('home')
